@@ -3,12 +3,14 @@ import { AgGridReact } from "ag-grid-react";
 import { fetchTrainings } from "../services/api";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb';
 
 function TrainingList() {
     const [training, setTraining] = useState([]);
     //const [open, setOpen] = useState(false);
     const [colDefs] = useState([
-        { field: "date", filter: true },
+        { field: "date", filter: true, cellRenderer: (params) => dayjs(params.value).format('DD.MM.YYYY HH:mm') },
         { field: "duration", filter: true },
         { field: "activity", filter: true}
     ]);
