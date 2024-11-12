@@ -39,13 +39,13 @@ function CustomerList() {
         handleFetch();
     }, []);
 
-        const handleFetch = () => {
+    const handleFetch = () => {
         fetchCustomers()
         .then((data) => {setCustomer(data._embedded.customers)})
         .catch((err) => console.error(err));
     }
 
-        const handleDelete = (url) => {
+    const handleDelete = (url) => {
         if (window.confirm("Are you sure you want to delete?")) {
             deleteCustomer(url)
             .then (() => {
