@@ -5,3 +5,11 @@ export function fetchCustomers() {
     return response.json();
   });
 }
+
+export function fetchTrainings() {
+  return fetch(import.meta.env.VITE_API_URL + "trainings").then((response) => {
+    if (!response.ok)
+      throw new Error("Response in fetch : " + response.statusText);
+    return response.json();
+  });
+}

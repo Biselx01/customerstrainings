@@ -14,8 +14,7 @@ function CustomerList() {
         { field: "postcode", filter: true},
         { field: "city", filter: true },
         { field: "email", filter: true},
-        { field: "phone", filter: true },
-        { field: "links", filter: true },
+        { field: "phone", filter: true }
     ]);
 
         useEffect(() => {

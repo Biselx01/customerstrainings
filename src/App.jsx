@@ -1,4 +1,5 @@
 import CustomerList from './components/CustomerList'
+import TrainingList from './components/TrainingList'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -17,6 +18,7 @@ function App() {
         </Toolbar>
       </AppBar>
     <CustomerList />
+    <TrainingList />
     <CssBaseline />
     </Container>
   )
