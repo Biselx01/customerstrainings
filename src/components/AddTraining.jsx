@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import DialogContent from '@mui/material/DialogContent';
+import { Box } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb';
@@ -36,7 +37,17 @@ export default function AddTraining(props) {
     setOpen(true);
   };
 
+  const resetForm = () => {
+    setTraining({
+      date: "",
+      duration: "",
+      activity: "",
+      customer: ""
+    });
+  };
+
   const handleClose = () => {
+    resetForm();
     setOpen(false);
   };
 
@@ -57,6 +68,8 @@ export default function AddTraining(props) {
     })
     .catch(err => console.error(err))
 
+
+
   }
 
   return (
@@ -68,16 +81,18 @@ export default function AddTraining(props) {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>New Training</DialogTitle>
-              <DialogContent>
-                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
-                    <DateTimePicker
-                        label="Basic date time picker"
-                        value={dayjs(training.date)}
-                        onChange={handleDateChange}
-                        renderInput={(params) => <TextField {...params} variant='standard' />}
-                    />
+    <DialogTitle>New Training</DialogTitle>
+        <DialogContent>
+            <Box mt={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
+                <DateTimePicker
+                    label="Basic date time picker"
+                    value={dayjs(training.date)}
+                    onChange={handleDateChange}
+                    renderInput={(params) => <TextField {...params} variant='standard' />}
+                />
                 </LocalizationProvider>
+            </Box>
         <TextField
             margin="dense"
             name="duration"
@@ -96,7 +111,8 @@ export default function AddTraining(props) {
             fullWidth
             variant="standard"
         />
-          <Select
+        <Box mt={3}>
+        <Select
             margin="dense"
             name="customer"
             label="Customer"
@@ -104,13 +120,18 @@ export default function AddTraining(props) {
             onChange={handleChange}
             fullWidth
             variant="standard"
-          >
+            displayEmpty
+        >
+            <MenuItem value="" disabled>
+            Select Customer
+            </MenuItem>
             {customers.map((customer) => (
-              <MenuItem key={customer._links.self.href} value={customer._links.self.href}>
+            <MenuItem key={customer._links.self.href} value={customer._links.self.href}>
                 {customer.firstname} {customer.lastname}
-              </MenuItem>
+            </MenuItem>
             ))}
-          </Select>
+        </Select>
+        </Box>
     </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

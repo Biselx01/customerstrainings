@@ -14,7 +14,7 @@ function TrainingList() {
     const [open, setOpen] = useState(false);
     const [colDefs] = useState([
         { field: "date", filter: true, cellRenderer: (params) => dayjs(params.value).format('DD.MM.YYYY HH:mm') },
-        { field: "duration", filter: true },
+        { field: "duration", filter: true, width: 120 },
         { field: "activity", filter: true},
         { field: "customer", filter: true },
         {
@@ -68,7 +68,7 @@ function TrainingList() {
     return (
         <>
         <AddTraining handleFetch={handleFetch}/>
-        <div className="ag-theme-material" style={{ height: 400, width: '100%' }}>
+        <div className="ag-theme-material" style={{ height: 600, width: '100%' }}>
             <AgGridReact
                 columnDefs={colDefs}
                 rowData={training}
