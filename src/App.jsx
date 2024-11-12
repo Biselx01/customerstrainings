@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CustomerList from './components/CustomerList'
 import TrainingList from './components/TrainingList'
+import Calendar from './components/CalendarPersonalTrainer'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -63,6 +64,7 @@ function App() {
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Customers" {...a11yProps(0)} />
             <Tab label="Trainings" {...a11yProps(1)} />
+            <Tab label="Personal Trainer" {...a11yProps(2)} />
           </Tabs>
         </Box>
           <CustomTabPanel value={value} index={0}>
@@ -70,6 +72,9 @@ function App() {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             <TrainingList />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <Calendar />
           </CustomTabPanel>
       </Box>
       <Outlet />

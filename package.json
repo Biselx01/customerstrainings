@@ -21,6 +21,7 @@
     "customerstrainings": "file:",
     "dayjs": "^1.11.13",
     "react": "^18.3.1",
+    "react-big-calendar": "^1.15.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0"
   },
