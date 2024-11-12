@@ -5,6 +5,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb';
+import AddTraining from "./AddTraining";
 
 function TrainingList() {
     const [training, setTraining] = useState([]);
@@ -43,6 +44,8 @@ function TrainingList() {
     };
 
     return (
+        <>
+        <AddTraining handleFetch={handleFetch}/>
         <div className="ag-theme-material" style={{ height: 400, width: '100%' }}>
             <AgGridReact
                 columnDefs={colDefs}
@@ -51,6 +54,7 @@ function TrainingList() {
                 paginationPageSize={10}
             />
         </div>
+        </>
     );
 }
 
