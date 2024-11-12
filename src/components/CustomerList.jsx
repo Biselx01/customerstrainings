@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import { fetchCustomers } from "../services/api";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import EditCustomer from "./EditCustomer";
 
 function CustomerList() {
     const [customer, setCustomer] = useState([]);
@@ -14,7 +15,11 @@ function CustomerList() {
         { field: "postcode", filter: true},
         { field: "city", filter: true },
         { field: "email", filter: true},
-        { field: "phone", filter: true }
+        { field: "phone", filter: true },
+          {
+            cellRenderer: params => <EditCustomer handleFetch={handleFetch} data={params.data} />,
+            width: 120
+        },
     ]);
 
         useEffect(() => {

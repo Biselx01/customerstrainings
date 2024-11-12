@@ -13,3 +13,15 @@ export function fetchTrainings() {
     return response.json();
   });
 }
+
+export function updatecustomer(url, updatedCustomer) {
+  return fetch(url, {
+    method: "PUT",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(updatedCustomer),
+  }).then((response) => {
+    if (!response.ok)
+      throw new Error("Error in updating: " + response.statusText);
+    return response.json();
+  });
+}
