@@ -1,13 +1,12 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import { updateCustomer } from '../services/api';
+import { saveCustomer } from '../services/api';
 import CustomerDialog from './CustomerDialog';
 
-export default function EditCustomer(props) {
+export default function AddCustomer(props) {
   const [open, setOpen] = useState(false);
   const [customer, setCustomer] = useState({
     firstname: "",
@@ -17,20 +16,10 @@ export default function EditCustomer(props) {
     city: "",
     email: "",
     phone: ""
-  })
+})
 
   const handleClickOpen = () => {
     setOpen(true);
-    console.log(props.data);
-    setCustomer({
-        firstname: props.data.firstname,
-        lastname: props.data.lastname,
-        streetaddress: props.data.streetaddress,
-        postcode: props.data.postcode,
-        city: props.data.city,
-        email: props.data.email,
-        phone: props.data.phone
-    })
   };
 
   const handleClose = () => {
@@ -42,25 +31,27 @@ export default function EditCustomer(props) {
   }
 
   const handleSave = () => {
-    updateCustomer(props.data._links.customer.href, customer)
+    saveCustomer(customer)
     .then(() => {
-        props.handleFetch();
-        handleClose();
+      // eslint-disable-next-line react/prop-types
+      props.handleFetch();
+      handleClose();
     })
     .catch(err => console.error(err))
+
   }
 
   return (
     <>
-      <Button size="small" onClick={handleClickOpen}>
-        Edit
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Add Customer
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>Update Customer</DialogTitle>
-        <CustomerDialog customer={customer} handleChange={handleChange} />
+        <DialogTitle>New Customer</DialogTitle>
+          <CustomerDialog customer={customer} handleChange={handleChange} />
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>

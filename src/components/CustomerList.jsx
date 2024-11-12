@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import { fetchCustomers } from "../services/api";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
 
 function CustomerList() {
@@ -33,6 +34,8 @@ function CustomerList() {
     }
 
     return (
+        <>
+        <AddCustomer handleFetch={handleFetch}/>
         <div className="ag-theme-material" style={{ height: 400, width: '100%' }}>
             <AgGridReact
                 columnDefs={colDefs}
@@ -41,6 +44,7 @@ function CustomerList() {
                 paginationPageSize={10}
             />
         </div>
+        </>
     );
 }
 
