@@ -21,7 +21,7 @@ function CustomerList() {
         { field: "firstname", filter: true },
         { field: "lastname", filter: true },
         { field: "streetaddress", filter: true},
-        { field: "postcode", filter: true},
+        { field: "postcode", filter: true, width: 120 },
         { field: "city", filter: true },
         { field: "email", filter: true},
         { field: "phone", filter: true },
@@ -72,7 +72,7 @@ function CustomerList() {
         <>
         <AddCustomer handleFetch={handleFetch}/>
           <Button variant="outlined" onClick={onBtnExport}>Export to CSV</Button>
-        <div className="ag-theme-material" style={{ height: 400, width: '100%' }}>
+        <div className="ag-theme-material" style={{ height: 600, width: '100%' }}>
             <AgGridReact
                 ref={gridRef}
                 columnDefs={colDefs}

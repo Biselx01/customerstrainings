@@ -51,7 +51,7 @@ function App() {
   };
 
   return (
-    <Container maxWidth="xl"> 
+    <Container maxWidth="xxl"> 
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6">
