@@ -111,7 +111,7 @@ export default function AddTraining(props) {
             fullWidth
             variant="standard"
           />
-          <Box mt={3}>
+          <Box mt={1}>
             <Autocomplete
               options={customers}
               getOptionLabel={(customer) => `${customer.firstname} ${customer.lastname}`}

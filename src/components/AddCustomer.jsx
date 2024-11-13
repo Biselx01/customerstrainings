@@ -22,7 +22,20 @@ export default function AddCustomer(props) {
     setOpen(true);
   };
 
+  const resetForm = () => {
+    setCustomer({
+      firstname: "",
+      lastname: "",
+      streetaddress: "",
+      postcode: "",
+      city: "",
+      email: "",
+      phone: ""
+    });
+  };
+
   const handleClose = () => {
+    resetForm();
     setOpen(false);
   };
 
