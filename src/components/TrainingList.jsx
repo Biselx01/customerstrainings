@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { fetchTrainings, deleteTraining } from "../services/api";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb';
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 import AddTraining from "./AddTraining";
 import Button from "@mui/material/Button";
 import Snackbar from '@mui/material/Snackbar';
+import { fetchTrainings, deleteTraining } from "../services/api";
 
 function TrainingList() {
     const [training, setTraining] = useState([]);
@@ -28,10 +28,9 @@ function TrainingList() {
         }
     ]);
 
-        useEffect(() => {
+    useEffect(() => {
         handleFetch();
     }, []);
-
 
     const handleFetch = () => {
         fetchTrainings()
@@ -67,16 +66,16 @@ function TrainingList() {
 
     return (
         <>
-        <AddTraining handleFetch={handleFetch}/>
-        <div className="ag-theme-material" style={{ height: 600, width: '100%' }}>
-            <AgGridReact
-                columnDefs={colDefs}
-                rowData={training}
-                pagination={true}
-                paginationPageSize={10}
-            />
-        </div>
-        <Snackbar
+            <AddTraining handleFetch={handleFetch}/>
+            <div className="ag-theme-material" style={{ height: 600, width: '100%' }}>
+                <AgGridReact
+                    columnDefs={colDefs}
+                    rowData={training}
+                    pagination={true}
+                    paginationPageSize={10}
+                />
+            </div>
+            <Snackbar
                 open={open}
                 autoHideDuration={3000}
                 onClose={() => setOpen(false)}

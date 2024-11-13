@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import { updateCustomer } from '../services/api';
 import CustomerDialog from './CustomerDialog';
+import { updateCustomer } from '../services/api';
 
 export default function EditCustomer(props) {
   const [open, setOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function EditCustomer(props) {
     city: "",
     email: "",
     phone: ""
-  })
+  });
 
   const handleClickOpen = () => {
     setOpen(true);

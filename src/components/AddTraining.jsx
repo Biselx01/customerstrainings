@@ -7,12 +7,11 @@ import TextField from '@mui/material/TextField';
 import DialogContent from '@mui/material/DialogContent';
 import { Box } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import dayjs from 'dayjs';
-import 'dayjs/locale/en-gb';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb';
+import Autocomplete from '@mui/material/Autocomplete';
 import { saveTraining, fetchCustomers } from '../services/api';
 
 dayjs.locale('en-gb');
@@ -25,9 +24,9 @@ export default function AddTraining(props) {
     duration: "",
     activity: "",
     customer: ""
-  })
+  });
 
-    useEffect(() => {
+  useEffect(() => {
     fetchCustomers()
       .then((data) => setCustomers(data._embedded.customers))
       .catch((err) => console.error(err));
@@ -53,11 +52,15 @@ export default function AddTraining(props) {
 
   const handleChange = (event) => {
     setTraining({...training, [event.target.name]: event.target.value});
-  }
+  };
 
-   const handleDateChange = (date) => {
-        setTraining({ ...training, date: date.toISOString() });
-    }
+  const handleDateChange = (date) => {
+    setTraining({ ...training, date: date.toISOString() });
+  };
+
+  const handleCustomerChange = (event, value) => {
+    setTraining({ ...training, customer: value ? value._links.self.href : "" });
+  };
 
   const handleSave = () => {
     saveTraining(training)
@@ -67,10 +70,7 @@ export default function AddTraining(props) {
       handleClose();
     })
     .catch(err => console.error(err))
-
-
-
-  }
+  };
 
   return (
     <>
@@ -81,19 +81,19 @@ export default function AddTraining(props) {
         open={open}
         onClose={handleClose}
       >
-    <DialogTitle>New Training</DialogTitle>
+        <DialogTitle>New Training</DialogTitle>
         <DialogContent>
-            <Box mt={3}>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
-                <DateTimePicker
-                    label="Basic date time picker"
-                    value={dayjs(training.date)}
-                    onChange={handleDateChange}
-                    renderInput={(params) => <TextField {...params} variant='standard' />}
-                />
-                </LocalizationProvider>
-            </Box>
-        <TextField
+          <Box mt={3}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
+              <DateTimePicker
+                label="Date"
+                value={dayjs(training.date)}
+                onChange={handleDateChange}
+                renderInput={(params) => <TextField {...params} variant='standard' />}
+              />
+              </LocalizationProvider>
+          </Box>
+          <TextField
             margin="dense"
             name="duration"
             label="Duration"
@@ -101,8 +101,8 @@ export default function AddTraining(props) {
             onChange={handleChange}
             fullWidth
             variant="standard"
-        />
-        <TextField
+          />
+          <TextField
             margin="dense"
             name="activity"
             label="Activity"
@@ -110,29 +110,18 @@ export default function AddTraining(props) {
             onChange={handleChange}
             fullWidth
             variant="standard"
-        />
-        <Box mt={3}>
-        <Select
-            margin="dense"
-            name="customer"
-            label="Customer"
-            value={training.customer}
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-            displayEmpty
-        >
-            <MenuItem value="" disabled>
-            Select Customer
-            </MenuItem>
-            {customers.map((customer) => (
-            <MenuItem key={customer._links.self.href} value={customer._links.self.href}>
-                {customer.firstname} {customer.lastname}
-            </MenuItem>
-            ))}
-        </Select>
-        </Box>
-    </DialogContent>
+          />
+          <Box mt={3}>
+            <Autocomplete
+              options={customers}
+              getOptionLabel={(customer) => `${customer.firstname} ${customer.lastname}`}
+              renderInput={(params) => <TextField {...params} label="Customer" variant="standard" />}
+              onChange={handleCustomerChange}
+              value={customers.find(customer => customer._links.self.href === training.customer) || null}
+              isOptionEqualToValue={(option, value) => option._links.self.href === value._links.self.href}
+            />
+          </Box>
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>

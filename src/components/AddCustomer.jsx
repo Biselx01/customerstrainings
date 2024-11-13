@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import { saveCustomer } from '../services/api';
 import CustomerDialog from './CustomerDialog';
+import { saveCustomer } from '../services/api';
 
 export default function AddCustomer(props) {
   const [open, setOpen] = useState(false);
@@ -16,7 +16,7 @@ export default function AddCustomer(props) {
     city: "",
     email: "",
     phone: ""
-})
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,7 +28,7 @@ export default function AddCustomer(props) {
 
   const handleChange = (event) => {
     setCustomer({...customer, [event.target.name]: event.target.value});
-  }
+  };
 
   const handleSave = () => {
     saveCustomer(customer)
@@ -38,8 +38,7 @@ export default function AddCustomer(props) {
       handleClose();
     })
     .catch(err => console.error(err))
-
-  }
+  };
 
   return (
     <>

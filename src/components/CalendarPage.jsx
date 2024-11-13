@@ -1,10 +1,10 @@
 // this code is mainly from https://github.com/jquense/react-big-calendar/blob/master/stories/demos/exampleCode/createEventWithNoOverlap.js
 import { useState, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { fetchTrainings } from '../services/api';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import PropTypes from 'prop-types';
+import { fetchTrainings } from '../services/api';
 
 const localizer = momentLocalizer(moment);
 
@@ -14,31 +14,33 @@ export default function CreateEventWithNoOverlap({
   const [myEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    const fetchAndSetTrainings = async () => {
-      try {
-        const data = await fetchTrainings();
-        const trainings = data._embedded.trainings;
-        const events = await Promise.all(trainings.map(async training => {
-          const customerResponse = await fetch(training._links.customer.href);
-          const customerData = await customerResponse.json();
-          return {
-            title: `${training.activity} - ${customerData.firstname} ${customerData.lastname}`,
-            start: new Date(training.date),
-            end: new Date(new Date(training.date).getTime() + training.duration * 60000),
-          };
-        }));
-        setEvents(events);
-      } catch (error) {
-        console.error('Error fetching trainings:', error);
-      }
+    const fetchAndSetTrainings = () => {
+      fetchTrainings()
+        .then(data => {
+          const trainings = data._embedded.trainings;
+          return Promise.all(trainings.map(training => {
+            return fetch(training._links.customer.href)
+              .then(customerResponse => customerResponse.json())
+              .then(customerData => ({
+                title: `${training.activity} - ${customerData.firstname} ${customerData.lastname}`,
+                start: new Date(training.date),
+                end: new Date(new Date(training.date).getTime() + training.duration * 60000),
+              }));
+          }));
+        })
+        .then(events => {
+          setEvents(events);
+        })
+        .catch(err => {
+          console.error('Error fetching trainings:', err);
+        });
     };
 
     fetchAndSetTrainings();
   }, []);
 
   const handleSelectEvent = useMemo(
-    () => (event) => window.alert(event.title),
-    []
+    () => (event) => window.alert(event.title),[]
   );
 
   const { defaultDate, scrollToTime } = useMemo(
@@ -50,17 +52,19 @@ export default function CreateEventWithNoOverlap({
   );
 
   return (
-    <div className="height600" style={{ height: 600, width: '100%' }}>
-      <Calendar
-        dayLayoutAlgorithm={dayLayoutAlgorithm}
-        defaultDate={defaultDate}
-        defaultView={Views.WEEK}
-        events={myEvents}
-        localizer={localizer}
-        onSelectEvent={handleSelectEvent}
-        scrollToTime={scrollToTime}
-      />
-    </div>
+    <>
+      <div className="height600" style={{ height: 600, width: '100%' }}>
+        <Calendar
+          dayLayoutAlgorithm={dayLayoutAlgorithm}
+          defaultDate={defaultDate}
+          defaultView={Views.WEEK}
+          events={myEvents}
+          localizer={localizer}
+          onSelectEvent={handleSelectEvent}
+          scrollToTime={scrollToTime}
+        />
+      </div>
+    </>
   );
 }
 

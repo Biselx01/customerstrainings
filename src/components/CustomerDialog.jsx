@@ -4,16 +4,17 @@ import DialogContent from '@mui/material/DialogContent';
 
 export default function CustomerDialog({ customer, handleChange }) {
   return (
-    <DialogContent>
-      <TextField
-        margin="dense"
-        name="firstname"
-        label="Firstname"
-        value={customer.firstname}
-        onChange={handleChange}
-        fullWidth
-        variant="standard"
-      />
+    <>
+      <DialogContent>
+        <TextField
+          margin="dense"
+          name="firstname"
+          label="Firstname"
+          value={customer.firstname}
+          onChange={handleChange}
+          fullWidth
+          variant="standard"
+        />
         <TextField
             margin="dense"
             name="lastname"
@@ -68,6 +69,7 @@ export default function CustomerDialog({ customer, handleChange }) {
             fullWidth
             variant="standard"
         />  
-    </DialogContent>
+      </DialogContent>
+    </>
   );
 };
