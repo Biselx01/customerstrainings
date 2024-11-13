@@ -67,7 +67,7 @@ function TrainingList() {
     return (
         <>
             <AddTraining handleFetch={handleFetch}/>
-            <div className="ag-theme-material" style={{ height: 600, width: '100%' }}>
+            <div className="ag-theme-material" style={{ height: 500, width: '100%' }}>
                 <AgGridReact
                     columnDefs={colDefs}
                     rowData={training}

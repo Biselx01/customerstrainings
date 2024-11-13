@@ -53,7 +53,7 @@ export default function CreateEventWithNoOverlap({
 
   return (
     <>
-      <div className="height600" style={{ height: 600, width: '100%' }}>
+      <div className="height500" style={{ height: 500, width: '100%' }}>
         <Calendar
           dayLayoutAlgorithm={dayLayoutAlgorithm}
           defaultDate={defaultDate}

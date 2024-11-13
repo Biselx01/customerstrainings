@@ -18,13 +18,13 @@ function CustomerList() {
     const [customer, setCustomer] = useState([]);
     const [open, setOpen] = useState(false);
     const [colDefs] = useState([
-        { field: "firstname", filter: true },
-        { field: "lastname", filter: true },
+        { field: "firstname", filter: true, width: 170 },
+        { field: "lastname", filter: true, width: 170 },
         { field: "streetaddress", filter: true},
         { field: "postcode", filter: true, width: 120 },
-        { field: "city", filter: true },
+        { field: "city", filter: true, width: 170 },
         { field: "email", filter: true},
-        { field: "phone", filter: true },
+        { field: "phone", filter: true, width: 150 },
         {
             cellRenderer: params => <EditCustomer 
                 handleFetch={handleFetch} 
@@ -72,7 +72,7 @@ function CustomerList() {
         <>
             <AddCustomer handleFetch={handleFetch}/>
             <Button variant="outlined" onClick={onBtnExport}>Export to CSV</Button>
-            <div className="ag-theme-material" style={{ height: 600, width: '100%' }}>
+            <div className="ag-theme-material" style={{ height: 500, width: '100%' }}>
                 <AgGridReact
                     ref={gridRef}
                     columnDefs={colDefs}
